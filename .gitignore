@@ -1,0 +1,10 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.vite/
+.wrangler/
+*.log
+.DS_Store
+.env*
+!.env.example

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+ <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#283618"/><stop offset="1" stop-color="#606C38"/></linearGradient><radialGradient id="glow"><stop stop-color="#D4B895" stop-opacity=".4"/><stop offset="1" stop-color="#D4B895" stop-opacity="0"/></radialGradient><g id="star"><path d="M0-8L2-2L8 0L2 2L0 8L-2 2L-8 0L-2-2Z" fill="#D4B895"/></g><g id="crystal"><path d="M0-45L20-10L10 21H-12L-21-10Z" fill="#8B9D83" stroke="#C2C8A2" stroke-width="2"/><path d="M0-45L-3-7L10 21M-21-10L-3-7L20-10" fill="none" stroke="#D4B895" stroke-width="2" opacity=".6"/></g><g id="tree"><path d="M-6 0L4-110L-28-145M0-56L37-110M1-97L5-167" fill="none" stroke="#8B9D83" stroke-width="12" stroke-linecap="round"/><path d="M-28-145Q-86-185-71-231Q-16-230-28-145M5-167Q-24-228 8-250Q48-211 5-167M37-110Q47-185 92-185Q106-133 37-110" fill="#8B9D83"/></g></defs>
+ <path d="M0 0H960V540H0Z" fill="url(#sky)"/>
+ <circle cx="703" cy="139" r="170" fill="url(#glow)"/><circle cx="703" cy="139" r="69" fill="#D4B895"/><circle cx="725" cy="116" r="60" fill="#3E4F2B"/>
+ <g><use href="#star" x="115" y="83"/><use href="#star" x="306" y="114"/><use href="#star" x="511" y="65"/><use href="#star" x="860" y="164"/><use href="#star" x="453" y="205"/><use href="#star" x="94" y="206"/></g>
+ <g fill="#D4B895" opacity=".75"><circle cx="241" cy="39" r="2"/><circle cx="343" cy="48" r="2"/><circle cx="443" cy="138" r="2"/><circle cx="813" cy="64" r="2"/><circle cx="878" cy="102" r="2"/><circle cx="635" cy="39" r="2"/><circle cx="554" cy="174" r="2"/></g>
+ <path d="M0 337Q129 256 301 334T595 294T960 330V540H0Z" fill="#606C38"/>
+ <path d="M0 403Q161 344 337 392T695 359T960 411V540H0Z" fill="#738363"/>
+ <use href="#tree" transform="translate(124 452) scale(1.3)"/><use href="#tree" transform="translate(885 455) scale(1.5)"/>
+ <path d="M0 471Q128 423 316 461T696 425T960 470V540H0Z" fill="#3E4F2B"/>
+ <path d="M451 540Q387 470 581 457T603 413Q757 426 642 481T622 540Z" fill="#8B9D83" opacity=".6"/>
+ <g transform="translate(586 344)"><ellipse rx="52" ry="76" fill="#D4B895" opacity=".12" stroke="#C08E3A" stroke-width="8"/><ellipse rx="35" ry="60" fill="none" stroke="#D4B895" stroke-width="3"/><use href="#star" y="-9"/></g>
+ <use href="#crystal" transform="translate(255 465)"/><use href="#crystal" transform="translate(295 478) scale(.6)"/><use href="#crystal" transform="translate(759 463) scale(1.1)"/>
+ <g fill="#C08E3A"><circle cx="208" cy="388" r="4"/><circle cx="384" cy="431" r="3"/><circle cx="694" cy="339" r="4"/><circle cx="816" cy="392" r="3"/><circle cx="475" cy="361" r="3"/></g>
+</svg>

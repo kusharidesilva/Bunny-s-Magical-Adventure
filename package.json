@@ -1,0 +1,30 @@
+{
+  "name": "bunnys-magical-adventure",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "deploy:cloudflare": "npm run build && npx --yes wrangler@4.149.0 pages deploy dist --project-name=bunnys-magical-adventure --branch=main --commit-dirty=true",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run tests/scoring.test.ts tests/levels.test.ts tests/jump.test.ts",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.7.2",
+    "autoprefixer": "10.4.21",
+    "postcss": "8.5.29",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2",
+    "vite": "7.3.7",
+    "vitest": "5.0.3"
+  }
+}

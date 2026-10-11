@@ -1,0 +1,54 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+
+const url = process.argv[2];
+if (!url || !new URL(url).hostname.endsWith('.pages.dev')) throw new Error('Pass the deployed Cloudflare Pages URL.');
+const browser = await chromium.launch({ headless: true });
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  const response = await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+  assert.equal(response.status(), 200);
+  assert.equal(await page.locator('link[rel="icon"]').getAttribute('href'), '/favicon.svg');
+  const favicon = await page.request.get(new URL('/favicon.svg', url).href);
+  assert.equal(favicon.status(), 200);
+  assert.match(favicon.headers()['content-type'] ?? '', /image\/svg\+xml/);
+  await page.locator('#game-title').waitFor();
+  await page.screenshot({ path: 'docs/screenshots/hosted-menu.png', fullPage: true });
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  await page.waitForTimeout(1500);
+  assert.equal(await page.locator('#hud-hearts').textContent(), 'Hearts 3');
+  await page.keyboard.down('ArrowRight');
+  await page.waitForTimeout(450);
+  await page.keyboard.up('ArrowRight');
+  await page.keyboard.down('ArrowUp');
+  await page.waitForTimeout(100);
+  await page.keyboard.up('ArrowUp');
+  await page.waitForTimeout(80);
+  await page.keyboard.down('ArrowUp');
+  await page.waitForTimeout(100);
+  await page.keyboard.up('ArrowUp');
+  const lessons = await page.evaluate(() => JSON.parse(localStorage.getItem('bunny-magical-adventure:v1')).tutorials);
+  assert.deepEqual(lessons, { move: true, jump: true, doubleJump: true });
+  assert.equal(await page.locator('#tutorial-hint').isVisible(), false);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.getByRole('button', { name: 'Play', exact: true }).click();
+  assert.equal(await page.locator('#tutorial-hint').isVisible(), false);
+  assert.deepEqual(errors, []);
+  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  await mobile.addInitScript(() => {
+    Object.defineProperty(Element.prototype, 'requestFullscreen', { configurable: true, value: undefined });
+    Object.defineProperty(Element.prototype, 'webkitRequestFullscreen', { configurable: true, value: undefined });
+  });
+  await mobile.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+  await mobile.getByRole('button', { name: 'Enter fullscreen' }).click();
+  assert.equal(await mobile.locator('#app').getAttribute('data-fullscreen'), 'fallback');
+  assert.equal(await mobile.getByRole('button', { name: 'Exit fullscreen' }).getAttribute('aria-pressed'), 'true');
+  const frame = await mobile.locator('.game-frame').boundingBox();
+  assert.equal(Math.round(frame.width), 390); assert.equal(Math.round(frame.height), 844);
+  await mobile.getByRole('button', { name: 'Exit fullscreen' }).click();
+  assert.equal(await mobile.locator('#app').getAttribute('data-fullscreen'), null);
+  await mobile.close();
+  console.log(JSON.stringify({ url, status: response.status(), favicon: 'passed', gameplay: 'passed', doubleJump: 'passed', savedHints: 'passed', mobileFullscreen: 'passed', runtimeErrors: errors }));
+} finally { await browser.close(); }
